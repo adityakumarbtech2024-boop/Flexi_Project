@@ -285,12 +285,34 @@ button {
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  /* smoother, multi-property transition for hover/press */
+  transition: background 240ms cubic-bezier(.2,.9,.3,1),
+              transform 180ms cubic-bezier(.2,.9,.3,1),
+              box-shadow 180ms cubic-bezier(.2,.9,.3,1);
+  will-change: transform, box-shadow;
 }
 
+/* Hover: slight lift + subtle shadow + color shift */
 button:hover {
   background: #3c585f;
-  transform: translateY(-1px);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 8px 18px rgba(31, 48, 49, 0.12);
+}
+
+/* Keyboard accessibility */
+button:focus {
+  outline: none;
+}
+
+button:focus-visible {
+  box-shadow: 0 0 0 4px rgba(132, 210, 197, 0.18);
+  transform: translateY(-2px);
+}
+
+/* Active (pressed) state */
+button:active {
+  transform: translateY(-1px) scale(0.998);
+  box-shadow: 0 4px 10px rgba(31, 48, 49, 0.08);
 }
 
 /* 📋 Project List */
@@ -365,6 +387,8 @@ button:hover {
 
 .delete-btn:hover {
   background: #c9302c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(217, 48, 44, 0.08);
 }
 
 /* 📱 Responsive Design */
